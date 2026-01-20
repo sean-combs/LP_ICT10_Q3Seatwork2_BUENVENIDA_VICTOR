@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seatwork 2 Third Quarter</title>
+    <style>
+        /* CSS Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        select, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .radio-group {
+            margin-bottom: 10px;
+        }
+        
+        .radio-group label {
+            display: inline-block;
+            margin-right: 15px;
+            font-weight: normal;
+        }
+
+        /* The Rainbow Button Style */
+        #checkBtn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+            background: linear-gradient(90deg, #ff4b4b, #ffb74d, #4dd0e1, #aed581, #fff176);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            transition: opacity 0.3s;
+        }
+
+        #checkBtn:hover {
+            opacity: 0.9;
+        }
+
+        /* Result Area */
+        #result {
+            margin-top: 20px;
+            display: none;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        /* Image Styling */
+        .team-logo {
+            max-width: 200px; /* Controls image size */
+            height: auto;
+            margin-top: 15px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 10px;
+        }
+
+        .error-msg {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+
+        .success-msg {
+            color: #388e3c;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Seatwork 2 Third Quarter</h2>
+
+        <div class="form-group">
+            <label>Are you done with the online registration?</label>
+            <div class="radio-group">
+                <input type="radio" id="regYes" name="registration" value="yes">
+                <label for="regYes">Yes</label>
+                <input type="radio" id="regNo" name="registration" value="no">
+                <label for="regNo">No</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Do you have the medical clearance from the clinic?</label>
+            <div class="radio-group">
+                <input type="radio" id="medYes" name="medical" value="yes">
+                <label for="medYes">Yes</label>
+                <input type="radio" id="medNo" name="medical" value="no">
+                <label for="medNo">No</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="grade">What's your Grade Level?</label>
+            <select id="grade">
+                <option value="" disabled selected>Select Grade</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="section">What's your Section?</label>
+            <select id="section">
+                <option value="" disabled selected>Select Section</option>
+                <option value="Ruby">Ruby</option>
+                <option value="Emerald">Emerald</option>
+                <option value="Sapphire">Sapphire</option>
+                <option value="Diamond">Topaz</option>
+            </select>
+        </div>
+
+        <button id="checkBtn" onclick="checkEligibility()">Sign up</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function checkEligibility() {
+            // 1. Get values from inputs
+            var regYes = document.getElementById('regYes').checked;
+            var medYes = document.getElementById('medYes').checked;
+            var grade = document.getElementById('grade').value;
+            var section = document.getElementById('section').value;
+            var resultDiv = document.getElementById('result');
+
+            // Reset result content
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = "";
+
+            // Validation: Ensure all fields are filled
+            if (!document.querySelector('input[name="registration"]:checked') || 
+                !document.querySelector('input[name="medical"]:checked') || 
+                grade === "" || section === "") {
+                resultDiv.innerHTML = "<p class='error-msg'>Please answer all questions first.</p>";
+                return;
+            }
+
+            // 2. Logic Check
+            if (regYes && medYes) {
+                
+                var teamName = "";
+                var imageName = ""; 
+                
+                // Assign Team and Image based on Grade
+                switch(grade) {
+                    case "7":
+                        teamName = "Yellow Tigers";
+                        imageName = "tigers.jpg";
+                        break;
+                    case "8":
+                        teamName = "Blue Bears";
+                        imageName = "bears.jpg";
+                        break;
+                    case "9":
+                        teamName = "Red Bulldogs";
+                        imageName = "dogs.jpg";
+                        break;
+                    case "10":
+                        teamName = "Green Hornets";
+                        imageName = "hornets.jpg";
+                        break;
+                    default:
+                        teamName = "Unknown";
+                        imageName = "";
+                }
+
+                // 3. Display Success Message with Image
+                resultDiv.innerHTML = `
+                    <p class="success-msg">Congratulations! You are part of the ${teamName}</p>
+                    <img src="${imageName}" class="team-logo" alt="${teamName} Logo">
+                `;
+
+            } else {
+                // 4. Display Failure Message
+                var message = "<p class='error-msg'>You are not eligible yet:</p><ul>";
+                
+                if (!regYes) {
+                    message += "<li>You need to complete the online registration.</li>";
+                }
+                if (!medYes) {
+                    message += "<li>You need to secure a medical clearance.</li>";
+                }
+                
+                message += "</ul>";
+                resultDiv.innerHTML = message;
+            }
+        }
+    </script>
+</body>
+</html>
